@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: k3s.io/hostname
+                operator: In
+                values:
+                - node01
+      containers:
+      - name: mariadb
+        image: mariadb:latest
+        envFrom:
+          - secretRef:
+              name: mariadb-secret
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+          - name: mariadb-storage
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-storage
+          hostPath:
+            path: /mnt/storage/mariadb
