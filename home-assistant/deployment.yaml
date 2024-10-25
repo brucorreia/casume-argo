@@ -29,4 +29,8 @@ spec:
           - name: home-assistant-config
             mountPath: /config/configuration.yaml
             subPath: configuration.yaml
+      volumes:
+        - name: home-assistant-config
+          configMap:
+            name: home-assistant-config 
       restartPolicy: Always
