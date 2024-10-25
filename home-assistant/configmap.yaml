@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: home-assistant-config
+data:
+  configuration.yaml: |
+    homeassistant:
+      name: Home
+      latitude: 123.456
+      longitude: -123.456
+      elevation: 100
+      unit_system: metric
+      currency: USD
+      country: US
+      external_url: "http://ha.casume.com.br"
+      allowlist_external_dirs:
+        - "/config"
+      allowlist_external_urls:
+        - "http://ha.casume.com.br/api"

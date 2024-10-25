@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-assistant
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node01
+      containers:
+      - name: home-assistant
+        image: homeassistant/home-assistant:latest
+        env:
+          - name: DB_URL
+            value: "mysql://homeassistant:$(DB_PASSWORD)@mariadb:3306/homeassistant"
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: home-assistant-secret
+                key: DB_PASSWORD
+        volumeMounts:
+          - name: home-assistant-config
+            mountPath: /config
+      volumes:
+        - name: home-assistant-config
+          hostPath:
+            path: /mnt/storage/home-assistant
+      restartPolicy: Always
