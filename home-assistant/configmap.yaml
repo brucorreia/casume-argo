@@ -14,8 +14,8 @@ data:
       unit_system: metric
       currency: USD
       country: US
-      external_url: "http://ha.casume.com.br"
+      external_url: "https://ha.casume.com.br/"
       allowlist_external_dirs:
         - "/config"
       allowlist_external_urls:
-        - "http://ha.casume.com.br/api"
+        - "https://ha.casume.com.br/api"
