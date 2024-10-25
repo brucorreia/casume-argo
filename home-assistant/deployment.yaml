@@ -14,15 +14,6 @@ spec:
       labels:
         app: home-assistant
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node01
       containers:
       - name: home-assistant
         image: homeassistant/home-assistant:latest
@@ -36,9 +27,6 @@ spec:
                 key: DB_PASSWORD
         volumeMounts:
           - name: home-assistant-config
-            mountPath: /config
-      volumes:
-        - name: home-assistant-config
-          hostPath:
-            path: /mnt/storage/home-assistant
+            mountPath: /config/configuration.yaml
+            subPath: configuration.yaml
       restartPolicy: Always

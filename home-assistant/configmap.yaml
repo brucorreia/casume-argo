@@ -6,22 +6,17 @@ metadata:
   namespace: home-assistant
 data:
   configuration.yaml: |
-    homeassistant:
-      name: Home
-      latitude: 123.456
-      longitude: -123.456
-      elevation: 100
-      unit_system: metric
-      currency: USD
-      country: US
-      external_url: "https://ha.casume.com.br/"
-      allowlist_external_dirs:
-        - "/config"
-      allowlist_external_urls:
-        - "https://ha.casume.com.br/api"
-      http:
-        use_x_forwarded_for: true
-        trusted_proxies:
-          - 10.0.0.0/8
-          - 172.0.0.0/8
-          - 192.168.0.0/16
+    default_config:
+
+    frontend:
+      themes: !include_dir_merge_named themes
+
+    automation: !include automations.yaml
+    script: !include scripts.yaml
+    scene: !include scenes.yaml
+    http:
+      use_x_forwarded_for: true
+      trusted_proxies:
+        - 10.0.0.0/8
+        - 172.0.0.0/8
+        - 192.168.0.0/16
