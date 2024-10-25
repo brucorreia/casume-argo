@@ -36,4 +36,4 @@ spec:
       volumes:
         - name: mariadb-storage
           hostPath:
-            path: /mnt/storage/mariadb
+            path: /mnt/storage/mariadb-home-assistant
