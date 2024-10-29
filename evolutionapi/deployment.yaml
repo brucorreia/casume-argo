@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evolutionapi-deployment
+  namespace: evolutionapi
+  labels:
+    app: evolutionapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evolutionapi
+  template:
+    metadata:
+      labels:
+        app: evolutionapi
+    spec:
+      containers:
+      - name: evolutionapi
+        image: evolutionapi-team/evolutionapi-server:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: evolutionapi-secret   # Nome do Secret
+              key: API_KEY                # Nome da chave no Secret
+        volumeMounts:
+        - mountPath: /mnt/storage/evolutionapi
+          name: local-storage
+      restartPolicy: Always
+      volumes:
+      - name: local-storage
+        hostPath:
+          path: /mnt/storage/evolutionapi
+          type: DirectoryOrCreate
