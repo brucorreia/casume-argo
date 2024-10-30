@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: evolutionapi-service
+  name: evolutionapi
   namespace: evolutionapi
 spec:
   selector:
