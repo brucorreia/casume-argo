@@ -53,6 +53,28 @@ spec:
         ports:
         - containerPort: 8080
         env:
+        - name: DATABASE_ENABLED
+          value: "true"
+        - name: DATABASE_PROVIDER
+          value: "postgresql"
+        - name: DATABASE_CONNECTION_CLIENT_NAME
+          value: "evolution_exchange"        
+        - name: DATABASE_SAVE_DATA_INSTANCE
+          value: "true"  
+        - name: DATABASE_SAVE_DATA_NEW_MESSAGE
+          value: "true"  
+        - name: DATABASE_SAVE_MESSAGE_UPDATE
+          value: "true"
+        - name: DATABASE_SAVE_DATA_CONTACTS
+          value: "true"
+        - name: DATABASE_SAVE_DATA_CHATS
+          value: "true"
+        - name: DATABASE_SAVE_DATA_LABELS
+          value: "true"
+        - name: DATABASE_SAVE_DATA_HISTORIC
+          value: "true"
+        - name: CACHE_REDIS_ENABLED
+          value: "false"
         - name: NODE_ENV
           value: "production"
         - name: PORT
@@ -62,6 +84,16 @@ spec:
             secretKeyRef:
               name: evolutionapi-secret
               key: AUTHENTICATION_API_KEY
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: DB_PASSWORD
+        - name: DATABASE_CONNECTION_URI
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: DATABASE_CONNECTION_URI 
         volumeMounts:
         - mountPath: /mnt/storage/evolutionapi
           name: local-storage
