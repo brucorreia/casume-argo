@@ -2,3 +2,4 @@ secret.yaml
 secrets.yaml
 secret-mariadb.yaml
 secret-ha.yaml
+secret-postgres.yaml
