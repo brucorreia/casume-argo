@@ -88,5 +88,5 @@ spec:
       volumes:
       - name: postgres-storage
         hostPath:
-          path: /mnt/storage/postgres-data  # Diretório na máquina local
+          path: /mnt/storage/postgres-data
           type: DirectoryOrCreate

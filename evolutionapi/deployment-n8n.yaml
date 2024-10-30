@@ -1,0 +1,90 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: evolutionapi
+  name: n8n
+  labels:
+    app: n8n
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      labels:
+        app: n8n
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            preference:
+              matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node01
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node02
+          - weight: 50
+            preference:
+              matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node03
+          - weight: 30
+            preference:
+              matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node04
+      containers:
+      - name: n8n
+        image: n8nio/n8n:latest
+        ports:
+        - containerPort: 5678
+        env:
+          - name: N8N_BASIC_AUTH_ACTIVE
+            value: "true"
+          - name: N8N_BASIC_AUTH_USER
+            valueFrom:
+              secretKeyRef:
+                name: n8n-secret
+                key: username
+          - name: N8N_BASIC_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: n8n-secret
+                key: password
+          - name: DB_TYPE
+            value: "postgresdb"
+          - name: DB_POSTGRESDB_HOST
+            value: "postgres-service"
+          - name: DB_POSTGRESDB_PORT
+            value: "5432"
+          - name: DB_POSTGRESDB_DATABASE
+            value: "n8n_db"
+          - name: DB_POSTGRESDB_USER
+            value: "postgres"
+          - name: DB_POSTGRESDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: DB_PASSWORD
+        volumeMounts:
+          - name: n8n-data
+            mountPath: /home/node/.n8n
+      volumes:
+      - name: n8n-data
+        hostPath:
+          path: /mnt/storage/n8n-data
+          type: DirectoryOrCreate

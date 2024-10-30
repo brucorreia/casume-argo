@@ -79,6 +79,8 @@ spec:
           value: "production"
         - name: PORT
           value: "8080"
+        - name: WEBSOCKET_GLOBAL_EVENTS
+          value: "true"
         - name: AUTHENTICATION_API_KEY
           valueFrom:
             secretKeyRef:

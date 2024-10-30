@@ -3,3 +3,4 @@ secrets.yaml
 secret-mariadb.yaml
 secret-ha.yaml
 secret-postgres.yaml
+secret-n8n.yaml
