@@ -48,6 +48,11 @@ spec:
       containers:
       - name: home-assistant
         image: homeassistant/home-assistant:latest
+        command: ["sh", "-c"]
+        args:
+          - |
+            pip install pytapo
+            python3 -m homeassistant --config /config
         env:
           - name: DB_URL
             value: "mysql://homeassistant:$(DB_PASSWORD)@mariadb:3306/homeassistant"
