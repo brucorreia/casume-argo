@@ -6,7 +6,6 @@ resources:
 - sealed-secret.yaml
 - deployment.yaml
 - service.yaml
-- secret.yaml
 
 images:
 - name: backstage
