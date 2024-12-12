@@ -11,4 +11,4 @@ resources:
 images:
 - name: backstage
   newName: brucorreia/backstage
-  newTag: 1.1.3
+  newTag: 1.1.4
