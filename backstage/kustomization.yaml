@@ -7,6 +7,8 @@ resources:
 - deployment.yaml
 - service.yaml
 - service-external.yaml
+- users.yaml
+- groups.yaml
 
 images:
 - name: backstage
