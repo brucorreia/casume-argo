@@ -48,16 +48,16 @@ spec:
       containers:
       - name: minio
         image: minio/minio:latest
-        ports:
-        - containerPort: 9000
         envFrom:
           - secretRef:
-            name: minio-secrets
+              name: minio-secrets
+        ports:
+          - containerPort: 9000
         volumeMounts:
-        - mountPath: /data
-          name: minio-storage
+          - mountPath: /data
+            name: minio-storage
       volumes:
-      - name: minio-storage
-        hostPath:
-          path: /mnt/storage/minio
-          type: DirectoryOrCreate
+        - name: minio-storage
+          hostPath:
+            path: /mnt/storage/minio
+            type: DirectoryOrCreate
