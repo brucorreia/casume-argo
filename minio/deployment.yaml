@@ -47,7 +47,7 @@ spec:
                 - node04
       containers:
       - name: minio
-        image:   minio/minio:latest
+        image: minio/minio:latest
         ports:
         - containerPort: 9000
         envFrom:
