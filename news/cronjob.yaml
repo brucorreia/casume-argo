@@ -4,7 +4,7 @@ metadata:
   name: cronjob
   namespace: news
 spec:
-  schedule: "*/2 * * * *"
+  schedule: "* * * * *"
   jobTemplate:
     spec:
       template:
