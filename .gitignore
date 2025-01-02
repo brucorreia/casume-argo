@@ -6,3 +6,4 @@ secret-postgres.yaml
 secret-n8n.yaml
 sealed.pem
 secret-minio.yaml
+secret-news.yaml
