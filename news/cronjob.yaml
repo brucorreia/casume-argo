@@ -4,7 +4,8 @@ metadata:
   name: cronjob
   namespace: news
 spec:
-  schedule: "* * * * *"
+  schedule: "* 8-23 * * *"
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
