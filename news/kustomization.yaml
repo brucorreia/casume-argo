@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
 - cronjob.yaml
 - sealed-secret.yaml
+- namespace.yaml
 
 images:
 - name: news
