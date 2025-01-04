@@ -9,4 +9,4 @@ resources:
 images:
 - name: news
   newName: brucorreia/news
-  newTag: 999f145473d44fa0c50caa05363c1be3efb59e7d
+  newTag: 460e68443bafa704b720bc78d59c506171823061
