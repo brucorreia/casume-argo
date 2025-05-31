@@ -57,9 +57,11 @@ spec:
           valueFrom:
             secretKeyRef:
               name: postgres-secret
-              key: DB_PASSWORD      
+              key: DB_PASSWORD
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
+        - mountPath: /var/lib/postgresql/data/pgdata
           name: postgres-storage
       volumes:
       - name: postgres-storage
