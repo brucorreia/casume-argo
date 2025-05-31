@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  namespace: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node03
+      containers:
+      - name: pihole
+        image: pihole/pihole:latest
+        ports:
+        - containerPort: 53
+          name: dns
+          protocol: UDP
+        - containerPort: 53
+          name: dns-tcp
+          protocol: TCP
+        - containerPort: 80
+          name: web
+        envFrom:
+        - configMapRef:
+            name: pihole-config
+        volumeMounts:
+        - name: pihole-data
+          mountPath: /etc/pihole
+        - name: dnsmasq-d
+          mountPath: /etc/dnsmasq.d
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      volumes:
+      - name: pihole-data
+        hostPath:
+          path: /mnt/storage/pihole
+          type: DirectoryOrCreate
+      - name: dnsmasq-d
+        hostPath:
+          path: /mnt/storage/pihole/dnsmasq.d
+          type: DirectoryOrCreate 

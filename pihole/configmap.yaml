@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pihole-config
+  namespace: pihole
+data:
+  TZ: "America/Sao_Paulo"
+  WEBPASSWORD: "admin"
+  DNS1: "1.1.1.1"
+  DNS2: "1.0.0.1"
+  VIRTUAL_HOST: "pihole.local"
+  PROXY_LOCATION: "pihole"
+  ServerIP: "192.168.0.100"
+  ADMIN_EMAIL: "admin@local"
+  WEBTHEME: "default"
+  PIHOLE_DNS_: "1.1.1.1;1.0.0.1"
+  PIHOLE_INTERFACE: "eth0"
+  PIHOLE_UID: "999"
+  PIHOLE_GID: "999"
+  DNSMASQ_LISTENING: "all"
+  REV_SERVER: "false"
+  CONDITIONAL_FORWARDING: "false"
+  DNSMASQ_USER: "pihole"
+  DNSMASQ_GROUP: "pihole"
+  DNSMASQ_OPTS: "--local-service --no-resolv --no-poll --server=1.1.1.1 --server=1.0.0.1"
