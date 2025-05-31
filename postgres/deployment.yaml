@@ -14,37 +14,6 @@ spec:
       labels:
         app: postgres
     spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node01
-          - weight: 30
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node02
-          - weight: 50
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node03
-          - weight: 100
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node04
       containers:
       - name: postgres
         image: postgres:latest
@@ -58,10 +27,8 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: DB_PASSWORD
-        - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data/pgdata
+        - mountPath: /var/lib/postgresql/data
           name: postgres-storage
       volumes:
       - name: postgres-storage
