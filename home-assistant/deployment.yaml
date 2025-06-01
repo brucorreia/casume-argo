@@ -14,37 +14,6 @@ spec:
       labels:
         app: home-assistant
     spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node01
-          - weight: 50
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node02
-          - weight: 30
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node03
-          - weight: 10
-            preference:
-              matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node04
       containers:
       - name: home-assistant
         image: homeassistant/home-assistant:latest
@@ -53,19 +22,24 @@ spec:
           - |
             pip install pytapo
             python3 -m homeassistant --config /config
-        env:
-          - name: DB_URL
-            value: "mysql://homeassistant:$(DB_PASSWORD)@mariadb:3306/homeassistant"
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: home-assistant-secret
-                key: DB_PASSWORD
         volumeMounts:
           - name: home-assistant-config
             mountPath: /config
       volumes:
         - name: home-assistant-config
-          hostPath:
-            path: /mnt/storage/home-assistant-config
+          persistentVolumeClaim:
+            claimName: home-assistant-config
       restartPolicy: Always
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-assistant-config
+  namespace: home-assistant
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30Gi
+  storageClassName: longhorn
