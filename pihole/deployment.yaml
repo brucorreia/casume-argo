@@ -15,15 +15,6 @@ spec:
       labels:
         app: pihole
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - node03
       containers:
       - name: pihole
         image: pihole/pihole:latest
