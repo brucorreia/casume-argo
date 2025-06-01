@@ -44,10 +44,34 @@ spec:
             cpu: "500m"
       volumes:
       - name: pihole-data
-        hostPath:
-          path: /mnt/storage/pihole
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: pihole-data
       - name: dnsmasq-d
-        hostPath:
-          path: /mnt/storage/pihole/dnsmasq.d
-          type: DirectoryOrCreate 
+        persistentVolumeClaim:
+          claimName: pihole-dnsmasq
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pihole-data
+  namespace: pihole
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: longhorn
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pihole-dnsmasq
+  namespace: pihole
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn 
