@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi-server
+  namespace: unifi
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: unifi
+  template:
+    metadata:
+      labels:
+        app: unifi
+    spec:
+      containers:
+      - name: unifi-server
+        image: jacobalberty/unifi:latest
+        env:
+        - name: UNIFI_HTTP_PORT
+          value: "8080"
+        - name: UNIFI_HTTPS_PORT
+          value: "8443"
+        ports:
+        - containerPort: 3478
+          name: stun-port
+        - containerPort: 8080
+          name: http-port
+        - containerPort: 8443
+          name: https-port
+        volumeMounts:
+        - mountPath: /unifi
+          name: unifi-storage
+      volumes:
+      - name: unifi-storage
+        persistentVolumeClaim:
+          claimName: unifi-pvc-longhorn
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: unifi-pvc-longhorn
+  namespace: unifi
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: longhorn
