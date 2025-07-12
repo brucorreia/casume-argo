@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: listas-api
+  namespace: listas-api
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: listas-api
+  template:
+    metadata:
+      labels:
+        app: listas-api
+    spec:
+      containers:
+      - name: listas-api
+        image: listas-api
+      restartPolicy: Always

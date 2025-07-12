@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: listas-api
+  name: listas-api
+spec:
+  selector:
+    app: listas-api
+  type: ClusterIP
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8000
