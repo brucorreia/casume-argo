@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,5 +17,11 @@ spec:
     spec:
       containers:
       - name: listas-api
-        image: listas-api
+        image: brucorreia/listas-api:latest
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        envFrom:
+        - secretRef:
+            name: listas-api
       restartPolicy: Always
