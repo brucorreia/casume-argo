@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: listas-api
-        image: brucorreia/listas-api:latest
+        image: listas-api
         ports:
         - containerPort: 8000
           protocol: TCP
