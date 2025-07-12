@@ -10,4 +10,4 @@ resources:
 images:
 - name: listas-api
   newName: brucorreia/listas-api
-  newTag: 5d939754dbb1d4df6010e6ec02390d88fd80c4ad
+  newTag: 513eb3e4d0f0542eaa8b292731f91f4a00c8f94f
