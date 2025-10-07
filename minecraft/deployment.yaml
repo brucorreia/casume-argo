@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft
+  namespace: minecraft
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      volumes:
+      - name: mc-data
+        persistentVolumeClaim:
+          claimName: mc-data
+      initContainers:
+      - name: download-authme
+        image: curlimages/curl:8.5.0
+        command:
+          - sh
+          - -c
+          - |
+            mkdir -p /data/plugins && \
+            curl -L -o /data/plugins/AuthMe-Reloaded.jar \
+            https://github.com/AuthMe/AuthMeReloaded/releases/download/5.6.0/AuthMe-5.6.0.jar
+        volumeMounts:
+          - name: mc-data
+            mountPath: /data
+      containers:
+      - name: minecraft
+        image: itzg/minecraft-server:latest
+        ports:
+        - containerPort: 25565
+          name: game
+          protocol: TCP
+        env:
+        - name: EULA
+          value: "TRUE"
+        - name: VERSION
+          value: "1.20.1"
+        - name: TYPE
+          value: "PAPER"
+        - name: MEMORY
+          value: "2G"
+        - name: MAX_PLAYERS
+          value: "5"
+        - name: ONLINE_MODE
+          value: "FALSE" # permite login via AuthMe
+        - name: ENABLE_RCON
+          value: "false"
+        volumeMounts:
+        - name: mc-data
+          mountPath: /data
+        resources:
+          requests:
+            memory: "1536Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mc-data
+  namespace: minecraft
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: longhorn
+
