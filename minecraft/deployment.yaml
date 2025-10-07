@@ -15,23 +15,6 @@ spec:
       labels:
         app: minecraft
     spec:
-      volumes:
-      - name: mc-data
-        persistentVolumeClaim:
-          claimName: mc-data
-      initContainers:
-      - name: download-authme
-        image: curlimages/curl:8.5.0
-        command:
-          - sh
-          - -c
-          - |
-            mkdir -p /data/plugins && \
-            curl -L -o /data/plugins/AuthMe-Reloaded.jar \
-            https://github.com/AuthMe/AuthMeReloaded/releases/download/5.6.0/AuthMe-5.6.0.jar
-        volumeMounts:
-          - name: mc-data
-            mountPath: /data
       containers:
       - name: minecraft
         image: itzg/minecraft-server:latest
@@ -51,7 +34,7 @@ spec:
         - name: MAX_PLAYERS
           value: "5"
         - name: ONLINE_MODE
-          value: "FALSE" # permite login via AuthMe
+          value: "FALSE" # permite login sem conta Mojang
         - name: ENABLE_RCON
           value: "false"
         volumeMounts:
@@ -64,6 +47,10 @@ spec:
           limits:
             memory: "2Gi"
             cpu: "1000m"
+      volumes:
+      - name: mc-data
+        persistentVolumeClaim:
+          claimName: mc-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
