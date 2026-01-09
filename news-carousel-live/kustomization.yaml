@@ -10,6 +10,3 @@ images:
 - name: news
   newName: brucorreia/news-carousel-live
   newTag: 44d8fcb5e5608e77dd9b49e0b70c2674c71b983f
-- name: news-carousel-live
-  newName: brucorreia/news-carousel-live
-  newTag: a69d88c996d1b47ada91d4a0015eb7cd930bd0a2
