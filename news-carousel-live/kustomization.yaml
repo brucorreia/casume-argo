@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- namespace.yaml
+- service.yaml
+
+images:
+- name: news-carousel-live
+  newName: brucorreia/news-carousel-live
+  newTag: a69d88c996d1b47ada91d4a0015eb7cd930bd0a2

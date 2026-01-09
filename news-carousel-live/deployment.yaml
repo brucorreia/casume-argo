@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news-carousel-live
+  namespace: news
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: news-carousel-live
+  template:
+    metadata:
+      labels:
+        app: news-carousel-live
+    spec:
+      containers:
+      - name: news-carousel-live
+        image: news-carousel-live
+        ports:
+          - containerPort: 80
