@@ -7,6 +7,6 @@ resources:
 - service.yaml
 
 images:
-- name: news
+- name: news-carousel-live
   newName: brucorreia/news-carousel-live
   newTag: 44d8fcb5e5608e77dd9b49e0b70c2674c71b983f
