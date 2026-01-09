@@ -4,10 +4,22 @@ kind: Service
 metadata:
   name: news-carousel-live
   namespace: news
+  labels:
+    app.kubernetes.io/instance: news-carousel-live
+    app: news-carousel-live
 spec:
+  type: NodePort
   selector:
     app: news-carousel-live
   ports:
-  - port: 80
-    targetPort: 80
-  type: NodePort  
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 32544
+    - name: mqtt-proxy
+      port: 30218
+      targetPort: 30218
+      protocol: TCP
+      nodePort: 30484
+  sessionAffinity: None
