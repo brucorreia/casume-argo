@@ -8,4 +8,4 @@ resources:
 images:
 - name: news-carousel-live
   newName: brucorreia/news-carousel-live
-  newTag: c16cd3cab1f95340fc276ca46a27eed27b3a7617
+  newTag: 320ba05a294221c644642770aa9ef71b678ddf30
